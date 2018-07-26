@@ -194,6 +194,17 @@ func storeInCoreData(audioFile : NSManagedObject, playlistName : String)  {
     
 }
 
+func editContent(isPlay : Bool, audioName: String, name: AudioFile){
+    if let managedObjectContext = appDelegate?.persistentContainer.viewContext {
+        //            let place : Places = Places()
+        //            place.isFavourite = cell.isFavouriteLabel.text
+        do{
+            try managedObjectContext.save()
+        } catch let error as NSError{
+            print(error)
+        }
+    }
+}
 
 
 func temp(audioFile : NSManagedObject, playlistName : String)  {
@@ -245,6 +256,8 @@ func temp(audioFile : NSManagedObject, playlistName : String)  {
     catch let error as NSError {
         print("Could not fetch \(error), \(error.userInfo)")
     }
+    
+    
     
 }
 

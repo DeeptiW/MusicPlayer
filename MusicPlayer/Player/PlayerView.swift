@@ -31,15 +31,18 @@ class PlayerView: UIView {
     
     
     @IBAction func previousBtnAction(_ sender: Any) {
-        
-        
         currentSongIndex = currentSongIndex - 1
+        playPauseBtn.setImage(#imageLiteral(resourceName: "pause"), for: .normal)
         if currentSongIndex < 0 {
             currentSongIndex = allAudioListArray[currentCollectionTag].count - 1
             SingletonMusicPlayer.shared.playSong(collectionTag: currentCollectionTag, indexRow: currentSongIndex)
         }else{
             SingletonMusicPlayer.shared.playSong(collectionTag: currentCollectionTag, indexRow: currentSongIndex)
         }
+        NotificationCenter.default.post(name: Notification.Name("ViewController"), object: nil, userInfo: ["pause": "false"])
+        NotificationCenter.default.post(name: Notification.Name("AudioListViewController"), object: nil, userInfo: ["pause": "false"])
+
+
     }
     
     
@@ -48,24 +51,33 @@ class PlayerView: UIView {
             player?.pause()
             isPlay = false
             playPauseBtn.setImage(#imageLiteral(resourceName: "play"), for: .normal)
-        //    albumArray[currentSongIndex].isPlay = false
+            NotificationCenter.default.post(name: Notification.Name("ViewController"), object: nil, userInfo: ["pause": "true"])
+            NotificationCenter.default.post(name: Notification.Name("AudioListViewController"), object: nil, userInfo: ["pause": "true"])
+
+            
         }else{
-            //   player?.play()
             isPlay = true
             playPauseBtn.setImage(#imageLiteral(resourceName: "pause"), for: .normal)
-            //albumArray[currentSongIndex].isPlay = true
             SingletonMusicPlayer.shared.playSong(collectionTag: currentCollectionTag, indexRow: currentSongIndex)
+            NotificationCenter.default.post(name: Notification.Name("ViewController"), object: nil, userInfo: ["pause": "false"])
+            NotificationCenter.default.post(name: Notification.Name("AudioListViewController"), object: nil, userInfo: ["pause": "false"])
+
         }
     }
     
     @IBAction func nextBtnAction(_ sender: Any) {
         currentSongIndex = currentSongIndex + 1
+        playPauseBtn.setImage(#imageLiteral(resourceName: "pause"), for: .normal)
         if currentSongIndex > allAudioListArray[currentCollectionTag].count - 1 {
             currentSongIndex = 0
             SingletonMusicPlayer.shared.playSong(collectionTag: currentCollectionTag, indexRow: currentSongIndex)
         }else{
             SingletonMusicPlayer.shared.playSong(collectionTag: currentCollectionTag, indexRow: currentSongIndex)
         }
+        NotificationCenter.default.post(name: Notification.Name("ViewController"), object: nil, userInfo: ["pause": "false"])
+        NotificationCenter.default.post(name: Notification.Name("AudioListViewController"), object: nil, userInfo: ["pause": "false"])
+
+
     }
     
     

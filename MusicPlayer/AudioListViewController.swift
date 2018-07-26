@@ -19,6 +19,8 @@ class AudioListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         createRightBarItem()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.methodOfAudioListViewController(notification:)), name: Notification.Name("AudioListViewController"), object: nil)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -26,6 +28,23 @@ class AudioListViewController: UIViewController {
         audioListCollectionView.reloadData()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        window.viewWithTag(100)?.isHidden = false
+    }
+    
+    @objc func methodOfAudioListViewController(notification: Notification){
+        
+        guard let pause = notification.userInfo?["pause"] as? String else { return }
+        
+        if  pause == "true" {
+            for audio in allAudioListArray[currentCollectionTag]{
+                audio.isPlay = false
+            }
+        }
+        
+        audioListCollectionView.reloadData()
+    }
     
     func createRightBarItem() {
         let customBtn = UIButton(type: UIButtonType.custom)
@@ -78,7 +97,7 @@ extension AudioListViewController : UICollectionViewDelegate, UICollectionViewDa
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! CustomCell
             
             cell.thumbnail.image =  UIImage(data: audioDetails.thumbnail! as Data)!
-            if albumArray[indexPath.row].isPlay! {
+            if audioDetails.isPlay  {
                 cell.playBtn.image = #imageLiteral(resourceName: "pause")
             }else{
                 cell.playBtn.image = #imageLiteral(resourceName: "play")
@@ -93,11 +112,12 @@ extension AudioListViewController : UICollectionViewDelegate, UICollectionViewDa
             cell.thumbnail.image   =  UIImage(data: audioDetails.thumbnail! as Data)!
             cell.albumTitle.text   =  audioDetails.title
             cell.albumAuthor.text  =  audioDetails.author
-            /*if albumArray[indexPath.row].isPlay! {
+          
+            if audioDetails.isPlay  {
                 cell.playBtn.image = #imageLiteral(resourceName: "pause")
             }else{
                 cell.playBtn.image = #imageLiteral(resourceName: "play")
-            }*/
+            }
             return cell
         }
         
@@ -105,32 +125,30 @@ extension AudioListViewController : UICollectionViewDelegate, UICollectionViewDa
     
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-       /*showView()
         if isPlay && currentSongIndex == indexPath.row{
             isPlay = false
             player?.pause()
-            playPauseBtn.setImage(#imageLiteral(resourceName: "play"), for: .normal)//hide bottom bar
-            albumArray[indexPath.row].isPlay = false
-            audioCollectionView.reloadData()
+            SingletonMusicPlayer.shared.customView?.playPauseBtn.setImage(#imageLiteral(resourceName: "play"), for: .normal)
+            let audioDetails = allAudioListArray[collectionView.tag][indexPath.row]
+            audioDetails.isPlay = false
+            audioListCollectionView.reloadData()
             return
         }
         
         if isPlay && currentSongIndex != indexPath.row{
-            albumArray[currentSongIndex].isPlay = false
-            albumArray[indexPath.row].isPlay    = true
-            playPauseBtn.setImage(#imageLiteral(resourceName: "pause"), for: .normal)
-            
+            SingletonMusicPlayer.shared.customView?.playPauseBtn.setImage(#imageLiteral(resourceName: "pause"), for: .normal)
         }
         
         if !isPlay{
-            playPauseBtn.setImage(#imageLiteral(resourceName: "pause"), for: .normal)
-            albumArray[indexPath.row].isPlay = true
+            SingletonMusicPlayer.shared.customView?.playPauseBtn.setImage(#imageLiteral(resourceName: "pause"), for: .normal)
             isPlay = true
         }
         
-        playUsingAVPlayer(url: audioFileArray[indexPath.row])
-        currentSongIndex = indexPath.row
-        audioCollectionView.reloadData()*/
+        
+        currentSongIndex     = indexPath.row
+        //currentCollectionTag = collectionView.tag
+        SingletonMusicPlayer.shared.playSong(collectionTag: currentCollectionTag, indexRow: currentSongIndex)
+        audioListCollectionView.reloadData()
     }
     
     //Set collection view grid
@@ -165,6 +183,8 @@ extension AudioListViewController : UICollectionViewDelegate, UICollectionViewDa
     }
     
     @objc func moreBtnAction(_ sender: Any) {
+        window.viewWithTag(100)?.isHidden = true
+        
         // 1
         let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
@@ -186,7 +206,8 @@ extension AudioListViewController : UICollectionViewDelegate, UICollectionViewDa
         // 3
         let cancelAction = UIAlertAction(title: "Cancel", style: .destructive, handler: {
             (alert: UIAlertAction!) -> Void in
-            print("Cancelled")
+            //print("Cancelled")
+            window.viewWithTag(100)?.isHidden = false
         })
         
         // 4
@@ -204,13 +225,17 @@ extension AudioListViewController : UICollectionViewDelegate, UICollectionViewDa
         let addToPlaylistViewController = self.storyboard?.instantiateViewController(withIdentifier: "AddToPlaylistViewController") as! AddToPlaylistViewController
         let addBtn = sender as! UIButton
         addToPlaylistViewController.audioFile = audioList[addBtn.tag]
+        window.viewWithTag(100)?.isHidden = false
         self.present(addToPlaylistViewController, animated: true, completion: nil)
     }
     
     func playAudioAction(_ sender : Any)  {
         let playBtn = sender as! UIButton
-        let audioFile = audioList[playBtn.tag]
+       // let audioFile = audioList[playBtn.tag]
       //  playUsingAVPlayer(url: audioFile.url)
+        SingletonMusicPlayer.shared.playSong(collectionTag: currentCollectionTag, indexRow: playBtn.tag)
+        window.viewWithTag(100)?.isHidden = false
+        audioListCollectionView.reloadData()
         
     }
     

@@ -63,12 +63,18 @@
                                                                                     </userDefinedRuntimeAttribute>
                                                                                 </userDefinedRuntimeAttributes>
                                                                             </imageView>
-                                                                            <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="play" translatesAutoresizingMaskIntoConstraints="NO" id="dUj-iB-PPq">
+                                                                            <imageView alpha="0.80000000000000004" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="play" translatesAutoresizingMaskIntoConstraints="NO" id="dUj-iB-PPq">
                                                                                 <rect key="frame" x="25" y="25" width="40" height="40"/>
+                                                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                 <constraints>
                                                                                     <constraint firstAttribute="width" constant="40" id="hoR-BU-Rvj"/>
                                                                                     <constraint firstAttribute="height" constant="40" id="oPx-My-Yqh"/>
                                                                                 </constraints>
+                                                                                <userDefinedRuntimeAttributes>
+                                                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                                                        <integer key="value" value="20"/>
+                                                                                    </userDefinedRuntimeAttribute>
+                                                                                </userDefinedRuntimeAttributes>
                                                                             </imageView>
                                                                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="18Q-lf-bqv">
                                                                                 <rect key="frame" x="52" y="8" width="30" height="30"/>
@@ -336,12 +342,18 @@
                                                                 </userDefinedRuntimeAttribute>
                                                             </userDefinedRuntimeAttributes>
                                                         </imageView>
-                                                        <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="play" translatesAutoresizingMaskIntoConstraints="NO" id="y34-Gu-KSn">
+                                                        <imageView alpha="0.80000000000000004" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="play" translatesAutoresizingMaskIntoConstraints="NO" id="y34-Gu-KSn">
                                                             <rect key="frame" x="54" y="54" width="40" height="40"/>
+                                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="40" id="7Xl-7c-pVH"/>
                                                                 <constraint firstAttribute="height" constant="40" id="a59-Fl-QrH"/>
                                                             </constraints>
+                                                            <userDefinedRuntimeAttributes>
+                                                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                                    <integer key="value" value="20"/>
+                                                                </userDefinedRuntimeAttribute>
+                                                            </userDefinedRuntimeAttributes>
                                                         </imageView>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2FU-4N-FRT">
                                                             <rect key="frame" x="110" y="8" width="30" height="30"/>
@@ -417,9 +429,18 @@
                                                                 </userDefinedRuntimeAttribute>
                                                             </userDefinedRuntimeAttributes>
                                                         </imageView>
-                                                        <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="play" translatesAutoresizingMaskIntoConstraints="NO" id="iWg-1f-PRB">
+                                                        <imageView alpha="0.80000000000000004" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="play" translatesAutoresizingMaskIntoConstraints="NO" id="iWg-1f-PRB">
                                                             <rect key="frame" x="21" y="25" width="20" height="20"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="20" id="OSS-Ex-5XV"/>
+                                                                <constraint firstAttribute="width" constant="20" id="fQ9-tL-oeK"/>
+                                                            </constraints>
+                                                            <userDefinedRuntimeAttributes>
+                                                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                                    <integer key="value" value="10"/>
+                                                                </userDefinedRuntimeAttribute>
+                                                            </userDefinedRuntimeAttributes>
                                                         </imageView>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="V8V-vx-gri">
                                                             <rect key="frame" x="151" y="17" width="30" height="30"/>
@@ -435,9 +456,11 @@
                                                         <constraint firstItem="0cs-Y3-OGe" firstAttribute="leading" secondItem="kUk-P0-mxh" secondAttribute="leading" id="2l1-X0-ycF"/>
                                                         <constraint firstItem="idS-h4-elw" firstAttribute="leading" secondItem="3Ak-Nn-XcY" secondAttribute="leading" constant="6" id="Ek2-Xx-aka"/>
                                                         <constraint firstAttribute="trailing" secondItem="V8V-vx-gri" secondAttribute="trailing" constant="8" id="M0q-px-PTT"/>
+                                                        <constraint firstItem="iWg-1f-PRB" firstAttribute="centerX" secondItem="idS-h4-elw" secondAttribute="centerX" id="Ma3-FP-y1l"/>
                                                         <constraint firstItem="kUk-P0-mxh" firstAttribute="leading" secondItem="idS-h4-elw" secondAttribute="trailing" constant="5" id="Mge-YX-XoO"/>
                                                         <constraint firstItem="kUk-P0-mxh" firstAttribute="leading" secondItem="idS-h4-elw" secondAttribute="trailing" constant="5" id="cEA-Lh-otk"/>
                                                         <constraint firstItem="kUk-P0-mxh" firstAttribute="top" secondItem="idS-h4-elw" secondAttribute="top" id="cg0-E8-VSC"/>
+                                                        <constraint firstItem="iWg-1f-PRB" firstAttribute="centerY" secondItem="idS-h4-elw" secondAttribute="centerY" id="d6o-ea-bfv"/>
                                                         <constraint firstItem="idS-h4-elw" firstAttribute="top" secondItem="3Ak-Nn-XcY" secondAttribute="top" constant="10" id="e2S-jl-eQN"/>
                                                         <constraint firstItem="V8V-vx-gri" firstAttribute="centerY" secondItem="3Ak-Nn-XcY" secondAttribute="centerY" id="fRa-kL-9de"/>
                                                         <constraint firstItem="0cs-Y3-OGe" firstAttribute="trailing" secondItem="kUk-P0-mxh" secondAttribute="trailing" id="rt3-br-Hlv"/>

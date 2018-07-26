@@ -81,10 +81,26 @@ class ViewController: UIViewController {
         
         
         //
-        SingletonMusicPlayer.shared.customView?.playPauseBtn
-        
+        //SingletonMusicPlayer.shared.customView?.playPauseBtn
+       SingletonMusicPlayer.shared.playerView()
        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.methodOfReceivedNotification(notification:)), name: Notification.Name("ViewController"), object: nil)
+
+//       
+    
+    }
+    
+    @objc func methodOfReceivedNotification(notification: Notification){
         
+        guard let pause = notification.userInfo?["pause"] as? String else { return }
+        
+        if  pause == "true" {
+            for audio in allAudioListArray[currentCollectionTag]{
+                audio.isPlay = false
+            }
+        }
+        
+        audioTable.reloadData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -125,31 +141,17 @@ extension ViewController : UICollectionViewDelegate, UICollectionViewDataSource,
         let audioDetails = allAudioListArray[collectionView.tag][indexPath.row]
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! CustomCell
-        
-        /*cell.thumbnail.image = UIImage(data: audioDetails.value(forKey: "thumbnail") as! Data)
-        
-        if albumArray[indexPath.row].isPlay! {
+
+        if audioDetails.isPlay  {
             cell.playBtn.image = #imageLiteral(resourceName: "pause")
         }else{
             cell.playBtn.image = #imageLiteral(resourceName: "play")
         }
-        cell.editBtn.tag = indexPath.row
-        cell.editBtn.addTarget(self, action: #selector(editAction), for: .touchUpInside)*/
-        
-        
-        
-        //todo : long press edition
-        /*let lpgr = UILongPressGestureRecognizer(target: self, action: #selector(editAction(_:)))
-        lpgr.minimumPressDuration = 0.5
-        lpgr.delaysTouchesBegan = true
-        lpgr.delegate = self
-        collectionView.addGestureRecognizer(lpgr)*/
+//        cell.editBtn.tag = indexPath.row
+//        cell.editBtn.addTarget(self, action: #selector(editAction), for: .touchUpInside)
         
         cell.thumbnail.image = UIImage(data: audioDetails.thumbnail! as Data)!
-        
         return cell
-        
-        
     }
  
     
@@ -158,48 +160,27 @@ extension ViewController : UICollectionViewDelegate, UICollectionViewDataSource,
         if isPlay && currentSongIndex == indexPath.row{
             isPlay = false
             player?.pause()
-          //  playPauseBtn.setImage(#imageLiteral(resourceName: "play"), for: .normal)//hide bottom bar
-            //albumArray[indexPath.row].isPlay = false
-           // audioCollectionView.reloadData()
-           // NotificationCenter.default.post(name: Notification.Name("PlayPause"), object: nil, userInfo: ["play": false])
-           // NotificationCenter.default.post(name: Notification.Name("PlayPause"), object: false)
-
+            SingletonMusicPlayer.shared.customView?.playPauseBtn.setImage(#imageLiteral(resourceName: "play"), for: .normal)
+            let audioDetails = allAudioListArray[collectionView.tag][indexPath.row]
+            audioDetails.isPlay = false
+            audioTable.reloadData()
             return
         }
         
         if isPlay && currentSongIndex != indexPath.row{
-           // albumArray[currentSongIndex].isPlay = false
-           // albumArray[indexPath.row].isPlay    = true
-           // playPauseBtn.setImage(#imageLiteral(resourceName: "pause"), for: .normal)
-          //  NotificationCenter.default.post(name: Notification.Name("PlayPause"), object: nil, userInfo: ["play": true])
-           //NotificationCenter.default.post(name: Notification.Name("PlayPause"), object: true)
-
-
+            SingletonMusicPlayer.shared.customView?.playPauseBtn.setImage(#imageLiteral(resourceName: "pause"), for: .normal)
         }
         
         if !isPlay{
-          //  playPauseBtn.setImage(#imageLiteral(resourceName: "pause"), for: .normal)
-          //  albumArray[indexPath.row].isPlay = true
-         //   NotificationCenter.default.post(name: Notification.Name("PlayPause"), object: nil, userInfo: ["play": true])
-          //  NotificationCenter.default.post(name: Notification.Name("PlayPause"), object: true)
-
+            SingletonMusicPlayer.shared.customView?.playPauseBtn.setImage(#imageLiteral(resourceName: "pause"), for: .normal)
             isPlay = true
         }
         
-       // playUsingAVPlayer(url: audioFileArray[indexPath.row])
-       // currentSongIndex = indexPath.row
-       // audioCollectionView.reloadData()
         
-        
-        //
-        
-       
-        
-        isPlay               = true // before run check
         currentSongIndex     = indexPath.row
         currentCollectionTag = collectionView.tag
         SingletonMusicPlayer.shared.playSong(collectionTag: currentCollectionTag, indexRow: currentSongIndex)
-       
+        audioTable.reloadData()
         
     }
     
@@ -399,5 +380,9 @@ extension ViewController : UITableViewDelegate, UITableViewDataSource, UIGesture
         self.navigationController?.pushViewController(audioFileEditController!, animated: true)
     }
     
+    
+    
 }
+
+
 

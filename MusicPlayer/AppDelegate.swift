@@ -19,8 +19,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         
         //Adding custom View
-        window?.addSubview(SingletonMusicPlayer.shared.playerView())
         
+         
         
         return true
     }

@@ -15,6 +15,7 @@ var currentSongIndex     : Int = 0
 var currentCollectionTag : Int = 0
 var isPlay                     = false
 var allAudioListArray          = [[AudioFile]]()
+let window = UIApplication.shared.keyWindow!
 
 class SingletonMusicPlayer: NSObject {
 
@@ -38,11 +39,14 @@ class SingletonMusicPlayer: NSObject {
         }
     }
     
-    func playerView() -> UIView {
+    func playerView(){
         SingletonMusicPlayer.shared.customView = (PlayerView.instanceFromNib() as! PlayerView)
-        SingletonMusicPlayer.shared.customView?.frame = CGRect(x: 0, y: 200, width: 200, height: 50)
-        return SingletonMusicPlayer.shared.customView!
+        SingletonMusicPlayer.shared.customView?.frame = CGRect(x: 0, y: window.frame.height - (49+50), width: window.frame.width, height: 50)
+        SingletonMusicPlayer.shared.customView?.tag = 100
+        window.addSubview(SingletonMusicPlayer.shared.customView!)
+        
     }
+    
     
    
     
@@ -127,5 +131,13 @@ extension SingletonMusicPlayer {
     func playSong(collectionTag : Int, indexRow: Int)  {
         let audioDetails = allAudioListArray[collectionTag][indexRow]
         SingletonMusicPlayer.shared.playUsingAVPlayer(audioName: audioDetails.audioName!)
+        for audio in allAudioListArray[collectionTag]{
+            audio.isPlay = false
+        }
+        audioDetails.isPlay = true
+        NotificationCenter.default.post(name: Notification.Name("ViewController"), object: nil, userInfo: nil)
+        NotificationCenter.default.post(name: Notification.Name("AudioListViewController"), object: nil, userInfo: nil)
+
+        
     }
 }
