@@ -157,6 +157,11 @@ extension ViewController : UICollectionViewDelegate, UICollectionViewDataSource,
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
        // showView()
+        
+        if currentCollectionTag != collectionView.tag{
+            SingletonMusicPlayer.shared.resetCollection(collectionTag: currentCollectionTag)
+        }
+        
         if isPlay && currentSongIndex == indexPath.row{
             isPlay = false
             player?.pause()
@@ -376,6 +381,7 @@ extension ViewController : UITableViewDelegate, UITableViewDataSource, UIGesture
         //let moreBtn = sender as! UIButton
         let audioFileEditController = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "AudioListViewController") as? AudioListViewController
         let moreBtn = sender as! UIButton
+        audioFileEditController?.currentListTag = moreBtn.tag
         audioFileEditController?.audioList = allAudioListArray[moreBtn.tag]
         self.navigationController?.pushViewController(audioFileEditController!, animated: true)
     }

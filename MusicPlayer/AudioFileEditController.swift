@@ -46,7 +46,7 @@ class AudioFileEditController: UIViewController {
         imagePicker.delegate = self
         imagePicker.sourceType = .savedPhotosAlbum;
         imagePicker.allowsEditing = false
-        
+        window.viewWithTag(100)?.isHidden = true
         self.present(imagePicker, animated: true, completion: nil)
     }
     
@@ -96,8 +96,8 @@ extension AudioFileEditController : UITableViewDelegate, UITableViewDataSource {
 
 //MARK:- Image Picker Delegate
 extension AudioFileEditController : UINavigationControllerDelegate, UIImagePickerControllerDelegate{
-   
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        window.viewWithTag(100)?.isHidden = false
         self.dismiss(animated: true, completion: { () -> Void in
             if let orginalImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
                 self.thumbnailBtn.setImage(orginalImage, for: .normal)
@@ -107,6 +107,12 @@ extension AudioFileEditController : UINavigationControllerDelegate, UIImagePicke
             }
             else { print ("error") }
         })
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        self.dismiss(animated: true) {
+            window.viewWithTag(100)?.isHidden = false
+        }
     }
 }
 

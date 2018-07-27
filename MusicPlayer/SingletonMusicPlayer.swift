@@ -32,7 +32,7 @@ class SingletonMusicPlayer: NSObject {
             player = AVPlayer(url: url!)
             player?.play()
             NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: player?.currentItem, queue: .main) { _ in
-                //self.queueAudioPlayer()
+                SingletonMusicPlayer.shared.customView?.queueAudioPlayer()
             }
         } catch {
             print(error)
@@ -137,7 +137,12 @@ extension SingletonMusicPlayer {
         audioDetails.isPlay = true
         NotificationCenter.default.post(name: Notification.Name("ViewController"), object: nil, userInfo: nil)
         NotificationCenter.default.post(name: Notification.Name("AudioListViewController"), object: nil, userInfo: nil)
-
-        
     }
+    
+    func resetCollection(collectionTag : Int)  {
+        for audio in allAudioListArray[collectionTag]{
+            audio.isPlay = false
+        }
+    }
+    
 }

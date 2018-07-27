@@ -83,21 +83,16 @@ class PlayerView: UIView {
     
     //play audio in queue
      func queueAudioPlayer()  {
-        NotificationCenter.default.removeObserver(NSNotification.Name.AVPlayerItemDidPlayToEndTime)//NSNotification.Name.AVPlayerItemDidPlayToEndTime
-        albumArray[currentSongIndex].isPlay = false
+        NotificationCenter.default.removeObserver(NSNotification.Name.AVPlayerItemDidPlayToEndTime)//
         currentSongIndex = currentSongIndex + 1
-        
-        /*if currentSongIndex > audioFileArray.count - 1 {
-         albumArray[0].isPlay = true
-         //    playUsingAVPlayer(url: audioFileArray[0])
-         currentSongIndex = 0
-         }else{
-         albumArray[currentSongIndex].isPlay = true
-         //  playUsingAVPlayer(url: audioFileArray[currentSongIndex])
-         }*/
-        //    audioCollectionView.reloadData()
-        
-        
+        if currentSongIndex > allAudioListArray[currentCollectionTag].count - 1 {
+            currentSongIndex = 0
+            SingletonMusicPlayer.shared.playSong(collectionTag: currentCollectionTag, indexRow: currentSongIndex)
+        }else{
+            SingletonMusicPlayer.shared.playSong(collectionTag: currentCollectionTag, indexRow: currentSongIndex)
+        }
+        NotificationCenter.default.post(name: Notification.Name("ViewController"), object: nil, userInfo: ["pause": "false"])
+        NotificationCenter.default.post(name: Notification.Name("AudioListViewController"), object: nil, userInfo: ["pause": "false"])
     }
     
 }

@@ -13,6 +13,7 @@ class AudioListViewController: UIViewController {
     var isGrid           = false
     var rightBarButton  : UIBarButtonItem!
     var audioList       : [AudioFile]!
+    var currentListTag  : Int!
     
     @IBOutlet weak var audioListCollectionView: UICollectionView!
     
@@ -95,7 +96,6 @@ extension AudioListViewController : UICollectionViewDelegate, UICollectionViewDa
         let audioDetails = audioList[indexPath.row]
         if isGrid{
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! CustomCell
-            
             cell.thumbnail.image =  UIImage(data: audioDetails.thumbnail! as Data)!
             if audioDetails.isPlay  {
                 cell.playBtn.image = #imageLiteral(resourceName: "pause")
@@ -103,7 +103,7 @@ extension AudioListViewController : UICollectionViewDelegate, UICollectionViewDa
                 cell.playBtn.image = #imageLiteral(resourceName: "play")
             }
             cell.editBtn.tag = indexPath.row
-            //cell.editBtn.addTarget(self, action: #selector(editAction), for: .touchUpInside)
+            cell.editBtn.addTarget(self, action: #selector(moreBtnAction(_:)), for: .touchUpInside)
             return cell
         }else{
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "listView", for: indexPath) as! ListViewCell
@@ -125,6 +125,15 @@ extension AudioListViewController : UICollectionViewDelegate, UICollectionViewDa
     
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        if currentCollectionTag != currentListTag{
+            SingletonMusicPlayer.shared.resetCollection(collectionTag: currentCollectionTag)
+        }
+        
+        collectionView.tag = currentListTag
+        
+        
+        
         if isPlay && currentSongIndex == indexPath.row{
             isPlay = false
             player?.pause()
@@ -146,7 +155,7 @@ extension AudioListViewController : UICollectionViewDelegate, UICollectionViewDa
         
         
         currentSongIndex     = indexPath.row
-        //currentCollectionTag = collectionView.tag
+        currentCollectionTag = collectionView.tag
         SingletonMusicPlayer.shared.playSong(collectionTag: currentCollectionTag, indexRow: currentSongIndex)
         audioListCollectionView.reloadData()
     }
@@ -206,7 +215,6 @@ extension AudioListViewController : UICollectionViewDelegate, UICollectionViewDa
         // 3
         let cancelAction = UIAlertAction(title: "Cancel", style: .destructive, handler: {
             (alert: UIAlertAction!) -> Void in
-            //print("Cancelled")
             window.viewWithTag(100)?.isHidden = false
         })
         
@@ -236,7 +244,6 @@ extension AudioListViewController : UICollectionViewDelegate, UICollectionViewDa
         SingletonMusicPlayer.shared.playSong(collectionTag: currentCollectionTag, indexRow: playBtn.tag)
         window.viewWithTag(100)?.isHidden = false
         audioListCollectionView.reloadData()
-        
     }
     
    

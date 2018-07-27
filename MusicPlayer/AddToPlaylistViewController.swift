@@ -108,21 +108,8 @@ extension AddToPlaylistViewController : UITableViewDataSource, UITableViewDelega
         // 3. Grab the value from the text field, and print it when the user clicks OK.
         alert.addAction(UIAlertAction(title: "Create", style: .default, handler: { [weak alert] (_) in
             let textField = alert?.textFields![0] // Force unwrapping because we know it exists.
-            print("Text field: \(textField?.text)")
             self.playlistArray.add(textField?.text)
-            //createPlaylist(audioFile: self.audioFile, playlistName: textField!.text!)
-           // storeInCoreData(audioFile: self.audioFile, playlistName: textField!.text!)
-            
-            //temp(audioFile: self.audioFile, playlistName: textField!.text!)
-            
-//            let audioURl = self.audioFile as! AudioFile
-//            let audioArray = NSMutableArray()
-//            audioArray.add(audioURl.url)
-            
-//            saveAudioFile(url: <#T##URL#>, playlistName: <#T##String#>)
-            
             self.saveAudioFile(playlistName: textField!.text!)
-            
             self.playlistTable.reloadData()
             self.dismiss(animated: true, completion: nil)
         }))
@@ -138,6 +125,7 @@ extension AddToPlaylistViewController : UITableViewDataSource, UITableViewDelega
     
     func saveAudioFile(playlistName : String)  {
         temp(audioFile: audioFile, playlistName: playlistName)
+        self.dismiss(animated: true, completion: nil)
     }
     
 }
