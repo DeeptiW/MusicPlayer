@@ -35,14 +35,8 @@ class AddToPlaylistViewController: UIViewController {
         }
         
         
-//        let tempDetails = fetchAuiodDetails[0] as! AudioPlaylist
-//        print(tempDetails.audioUrl)
-//
-        
         let file = audioFile as! AudioFile
         audioUrl =  file.url
-        
-        
         
     }
 

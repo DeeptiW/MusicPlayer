@@ -10,10 +10,14 @@ import UIKit
 
 class PlaylistViewController: UIViewController {
 
+    @IBOutlet weak var playlistTable: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        self.title = "Playlist"
+        playlistTable.tableFooterView = UIView()
+        fetchPlaylist(entityName: "AudioPlaylist") { (true) in
+            self.playlistTable.reloadData()
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -22,14 +26,26 @@ class PlaylistViewController: UIViewController {
     }
     
 
-    /*
-    // MARK: - Navigation
+}
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+extension PlaylistViewController : UITableViewDelegate, UITableViewDataSource{
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return fetchAuiodDetails.count
     }
-    */
-
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+        let playList = fetchAuiodDetails[indexPath.row]
+        cell.textLabel?.text = playList.value(forKey: "playlistName") as? String
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        /*let audioFileEditController = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "AudioListViewController") as? AudioListViewController
+        audioFileEditController?.currentListTag = indexPath.row
+        audioFileEditController?.audioList = allAudioListArray[indexPath.row]
+        self.navigationController?.pushViewController(audioFileEditController!, animated: true)*/
+    }
+    
 }

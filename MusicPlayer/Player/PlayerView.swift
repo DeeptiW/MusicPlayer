@@ -76,8 +76,6 @@ class PlayerView: UIView {
         }
         NotificationCenter.default.post(name: Notification.Name("ViewController"), object: nil, userInfo: ["pause": "false"])
         NotificationCenter.default.post(name: Notification.Name("AudioListViewController"), object: nil, userInfo: ["pause": "false"])
-
-
     }
     
     

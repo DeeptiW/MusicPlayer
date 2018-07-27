@@ -22,22 +22,7 @@ var fetchAuiodDetails: [NSManagedObject] = []
 //MARK:- Store Details
 func storeIncoreData(completion:@escaping (Bool)-> Void)  {
     
-    let audioEntity = NSEntityDescription.entity(forEntityName: entityName, in: managedContext!)!
     for album in albumArray{
-       // let details = details as! AudioResult
-        /*let localAudio = NSManagedObject(entity: audioEntity, insertInto: managedContext)
-        localAudio.setValue(album.author, forKey: "author")
-        localAudio.setValue(album.title, forKey: "title")
-        localAudio.setValue(album.isPlay, forKey: "isPlay")
-        localAudio.setValue(album.url, forKey: "url")
-        localAudio.setValue(album.thumbnail, forKey: "thumbnail")
-        do {
-            try managedContext?.save()
-        } catch let error as NSError {
-            print("Could not save. \(error)")
-        }*/
-        
-        
         // Create Entity
         let entity = NSEntityDescription.entity(forEntityName: entityName, in: managedContext!)
         
@@ -50,7 +35,6 @@ func storeIncoreData(completion:@escaping (Bool)-> Void)  {
         audioList.thumbnail = album.thumbnail! as NSData
         audioList.audioName = album.audioName!
         
-        
         do {
             try managedObjectContext?.save()
         } catch let error as NSError {
@@ -58,8 +42,6 @@ func storeIncoreData(completion:@escaping (Bool)-> Void)  {
         }
     }
     completion(true)
-    
-    
 }
 
 //MARK:- Fetch Details

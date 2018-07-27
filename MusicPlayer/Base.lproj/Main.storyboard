@@ -293,11 +293,40 @@
                     <view key="view" contentMode="scaleToFill" id="mHI-tZ-WRN">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="MXD-oA-1Jb">
+                                <rect key="frame" x="0.0" y="64" width="375" height="554"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="Cell" id="mhf-19-Nhs">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="mhf-19-Nhs" id="JXh-z7-VP1">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="jZD-dX-2OQ" id="7NY-pF-EpL"/>
+                                    <outlet property="delegate" destination="jZD-dX-2OQ" id="VLW-9x-HsV"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="MXD-oA-1Jb" firstAttribute="trailing" secondItem="x1D-tS-poe" secondAttribute="trailing" id="Vvd-e2-xHf"/>
+                            <constraint firstItem="MXD-oA-1Jb" firstAttribute="leading" secondItem="x1D-tS-poe" secondAttribute="leading" id="bCG-fJ-2Xm"/>
+                            <constraint firstItem="MXD-oA-1Jb" firstAttribute="bottom" secondItem="x1D-tS-poe" secondAttribute="bottom" id="bJe-xP-fuR"/>
+                            <constraint firstItem="MXD-oA-1Jb" firstAttribute="top" secondItem="x1D-tS-poe" secondAttribute="top" id="bh3-7v-gz6"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="x1D-tS-poe"/>
                     </view>
                     <navigationItem key="navigationItem" id="8yJ-IT-rQD"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="playlistTable" destination="MXD-oA-1Jb" id="F2Z-GG-0hX"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gdx-Nx-BkL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
